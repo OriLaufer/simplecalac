@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Apply window insets for edge-to-edge display
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (view, windowInsets) -> {
-            final android.graphics.Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            final android.graphics.Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).toPlatformInsets();
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return windowInsets;
         });
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         int result = 0;
         boolean validOperation = true;
 
-        switch (view.id) {
+        switch (view.getId()) {
             case R.id.btnPlus:
                 result = num1 + num2;
                 break;
