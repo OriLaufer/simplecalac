@@ -2,67 +2,81 @@ package com.example.simplecalculator;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        // Apply window insets for edge-to-edge display
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (view, windowInsets) -> {
+            final android.graphics.Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return windowInsets;
         });
     }
 
     public void onBtnClicked(View view) {
-        // התחברות לשדות הקלט
-        EditText et1 = findViewById(R.id.Num1);
-        EditText et2 = findViewById(R.id.Num2);
+        EditText num1EditText = findViewById(R.id.Num1);
+        EditText num2EditText = findViewById(R.id.Num2);
 
-        // קריאת הטקסט משדות הקלט
-        String et1Text = et1.getText().toString();
-        String et2Text = et2.getText().toString();
+        String num1Text = num1EditText.getText().toString();
+        String num2Text = num2EditText.getText().toString();
 
-        // בדיקה שהקלט אינו ריק
-        if (et1Text.isEmpty() || et2Text.isEmpty()) {
-            Toast.makeText(this, "Please enter both numbers", Toast.LENGTH_LONG).show();
+        if (num1Text.isEmpty() || num2Text.isEmpty()) {
+            Toast.makeText(this, "Please enter both numbers", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // המרת המחרוזת למספר שלם
-        Integer num1 = Integer.valueOf(et1Text);
-        Integer num2 = Integer.valueOf(et2Text);
-
-        // הפעלת הפעולה המתאימה
-        Integer result = null;
-        if (view.getId() == R.id.btnPlus) {
-            result = num1 + num2;
-        } else if (view.getId() == R.id.btnMinus) {
-            result = num1 - num2;
-        } else if (view.getId() == R.id.btnMult) {
-            result = num1 * num2;
-        } else if (view.getId() == R.id.btnDiv) {
-            if (num2 == 0) {
-                // הודעת שגיאה במקרה של חלוקה באפס
-                Toast.makeText(this, "Can't divide by 0", Toast.LENGTH_LONG).show();
-                return;
-            }
-            result = num1 / num2;
+        int num1, num2;
+        try {
+            num1 = Integer.parseInt(num1Text);
+            num2 = Integer.parseInt(num2Text);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid input. Please enter numbers only.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // הצגת התוצאה
-        if (result != null) {
-            TextView tvRes = findViewById(R.id.tvResult);
-            tvRes.setText(result.toString());
+        int result = 0;
+        boolean validOperation = true;
+
+        switch (view.id) {
+            case R.id.btnPlus:
+                result = num1 + num2;
+                break;
+            case R.id.btnMinus:
+                result = num1 - num2;
+                break;
+            case R.id.btnMult:
+                result = num1 * num2;
+                break;
+            case R.id.btnDiv:
+                if (num2 == 0) {
+                    Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
+                    validOperation = false;
+                } else {
+                    result = num1 / num2;
+                }
+                break;
+            default:
+                validOperation = false;
+        }
+
+        if (validOperation) {
+            TextView resultTextView = findViewById(R.id.tvResult);
+            DecimalFormat decimalFormat = new DecimalFormat("#,###");
+            resultTextView.setText(decimalFormat.format(result));
         }
     }
-
+}
