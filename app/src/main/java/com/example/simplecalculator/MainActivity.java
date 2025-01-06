@@ -1,5 +1,6 @@
 package com.example.simplecalculator;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     public void onBtnClicked(View view) {
         EditText num1EditText = findViewById(R.id.Num1);
         EditText num2EditText = findViewById(R.id.Num2);
@@ -47,36 +50,30 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid input. Please enter numbers only.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        int result = 0;
         boolean validOperation = true;
+        Integer result = null;
 
-        switch (view.getId()) {
-            case R.id.btnPlus:
-                result = num1 + num2;
-                break;
-            case R.id.btnMinus:
-                result = num1 - num2;
-                break;
-            case R.id.btnMult:
-                result = num1 * num2;
-                break;
-            case R.id.btnDiv:
-                if (num2 == 0) {
+        if (view.getId() == R.id.btnPlus)
+            result = num1 + num2;
+        if (view.getId() == R.id.btnMinus)
+            result = num1 - num2;
+        if (view.getId() == R.id.btnMult)
+            result = num1 * num2;
+        if (view.getId() == R.id.btnDiv)
+            result = num1 / num2;
+
+        if (result != null) {
+            TextView tvRes = findViewById(R.id.tvResult);
+            tvRes.setText(result.toString());
+        }
+
+        if (num2 == 0) {
                     Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
                     validOperation = false;
                 } else {
                     result = num1 / num2;
                 }
-                break;
-            default:
                 validOperation = false;
         }
 
-        if (validOperation) {
-            TextView resultTextView = findViewById(R.id.tvResult);
-            DecimalFormat decimalFormat = new DecimalFormat("#,###");
-            resultTextView.setText(decimalFormat.format(result));
-        }
-    }
 }
