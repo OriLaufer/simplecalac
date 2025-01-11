@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.text.DecimalFormat;
-
 public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
@@ -50,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid input. Please enter numbers only.", Toast.LENGTH_SHORT).show();
             return;
         }
-        boolean validOperation = true;
         Integer result = null;
 
         if (view.getId() == R.id.btnPlus)
@@ -68,12 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (num2 == 0) {
-                    Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
-                    validOperation = false;
-                } else {
-                    result = num1 / num2;
-                }
-                validOperation = false;
+            Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
         }
-
+    }
 }
