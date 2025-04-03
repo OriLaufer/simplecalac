@@ -1,41 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="150sp"
-        android:layout_height="150sp"
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40sp"
-        android:id="@+id/profile_image"/>
+        android:layout_marginTop="40dp"/>
 
     <TextView
+        android:id="@+id/nameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/profile_image"
-        android:layout_marginTop="10sp"
-        android:id="@id/nameTv"/>
+        android:layout_marginTop="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/nameTv"
-            android:layout_marginTop="10sp"
-            android:id="@id/mailTV"/>
+    <TextView
+        android:id="@+id/mailTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/nameTv"
+        android:layout_marginTop="10dp"/>
 
-           <com.google.android.gms.common.SignInButton
-               android:layout_width="200sp"
-               android:layout_height="wrap_content"
-               android:layout_centerHorizontal="true"
-               android:layout_below="@id/mailTV"
-               android:layout_marginTop="20sp"
-               android:id="@+id/signIn"/>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signIn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/mailTv"
+        android:layout_marginTop="20dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/signIn"
+        android:layout_marginTop="20dp"
+        android:text="Sign Out"/>
 
 </RelativeLayout>
